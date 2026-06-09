@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  fluent-bit:
+    image: fluent/fluent-bit:3.0
+    container_name: debug-fluentbit
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+      - ./fluent-bit/strip_prefix.lua:/fluent-bit/etc/strip_prefix.lua
+      - ./fluent-bit/buffer:/fluent-bit/buffer
+    depends_on:
+      - loki
+    restart: always
+
+  loki:
+    image: grafana/loki:3.0.0
+    container_name: debug-loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - ./loki/config:/etc/loki
+      - ./loki/data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    restart: always
+
+  grafana:
+    image: grafana/grafana:11.0.0
+    container_name: debug-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+    depends_on:
+      - loki
+    restart: always

@@ -1,0 +1,49 @@
+{
+  "title": "Firmware Debug Logs",
+  "tags": ["fw", "debug"],
+  "schemaVersion": 39,
+  "version": 1,
+  "timezone": "browser",
+  "time": { "from": "now-1h", "to": "now" },
+  "timepicker": {},
+  "templating": {
+    "list": [
+      {
+        "name": "topic",
+        "label": "Topic",
+        "type": "query",
+        "query": "label_values(topic)",
+        "datasource": { "type": "loki", "uid": "P8E80F9AEF21F6940" },
+        "refresh": 1,
+        "includeAll": true,
+        "multi": true,
+        "allValue": ".*"
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Firmware Debug Logs",
+      "type": "logs",
+      "gridPos": { "h": 24, "w": 24, "x": 0, "y": 0 },
+      "datasource": { "type": "loki", "uid": "P8E80F9AEF21F6940" },
+      "options": {
+        "showTime": true,
+        "showLabels": true,
+        "showCommonLabels": false,
+        "wrapLogMessage": false,
+        "prettifyLogMessages": true,
+        "enableLogDetails": true,
+        "sortOrder": "Descending"
+      },
+      "targets": [
+        {
+          "expr": "{job=\"fw_debugging\", topic=~\"$topic\"}",
+          "refId": "A"
+        }
+      ]
+    }
+  ],
+  "refresh": "30s"
+}

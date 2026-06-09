@@ -1,0 +1,12 @@
+# Runtime data
+grafana/data/
+loki/data/chunks/
+loki/data/tsdb-shipper-*/
+loki/data/wal/
+loki/data/compactor/
+loki/data/rules/
+fluent-bit/buffer/
+
+# Binary artifacts
+*.bin
+*.kfpkg
