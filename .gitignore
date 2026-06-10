@@ -7,6 +7,9 @@ loki/data/compactor/
 loki/data/rules/
 fluent-bit/buffer/
 
+# Python virtual environment
+.venv/
+
 # Binary artifacts
 *.bin
 *.kfpkg

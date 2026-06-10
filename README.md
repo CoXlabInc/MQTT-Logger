@@ -77,6 +77,19 @@ Device reset is triggered via the `command/{device_id}/reboot` topic.
 
 Reads logs from serial port and forwards them to MQTT.
 
+#### Setup
+
+```bash
+cd slave
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+#### Usage
+
+Serial mode:
+
 ```bash
 python slave.py --s=server:1883 --p=/dev/ttyUSB0 --n=id1
 ```
