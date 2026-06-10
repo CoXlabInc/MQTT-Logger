@@ -10,6 +10,16 @@ Firmware debugging log collection infrastructure — Fluent Bit + Loki + Grafana
 | Log Storage | Loki | Indexes only metadata labels, minimal disk overhead |
 | Visualization | Grafana | Real-time log timeline, keyword filtering |
 
+## Initial Setup
+
+Create data directories with correct ownership before first run:
+
+```bash
+mkdir -p ./loki/data ./grafana/data
+sudo chown 10001:10001 ./loki/data
+sudo chown 472:472 ./grafana/data
+```
+
 ## Quick Start
 
 ```bash
