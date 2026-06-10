@@ -7,7 +7,7 @@ import pytz
 import time
 import argparse
 
-def on_connect(client, userdata, flags, rc):
+def on_connect(client, userdata, flags, reason_code, properties):
     print("server connect")
 
 def on_message(client, userdata, msg):
@@ -49,7 +49,7 @@ idnum = args.n
 broker_address = str(address[0])
 broker_port = int(address[1])
 
-client = mqtt.Client()
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 client.on_connect = on_connect
 client.on_message = on_message
 client.connect(host=broker_address, port=broker_port)
@@ -84,6 +84,6 @@ else:
             bytesize=serial.EIGHTBITS,
             timeout=2)
     while True:
-        logline = ser.readline()
+        logline = ser.readline().decode('utf-8', errors='replace')
         if logline != "":
             publish(logline)
