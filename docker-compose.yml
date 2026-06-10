@@ -17,8 +17,6 @@ services:
   loki:
     image: grafana/loki:3.0.0
     container_name: debug-loki
-    ports:
-      - "3100:3100"
     volumes:
       - ./loki/config:/etc/loki
       - ./loki/data:/loki
